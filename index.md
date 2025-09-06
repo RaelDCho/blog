@@ -2,4 +2,5 @@ Blog Test
 
 PicoCTF
 ---
-[unpackme-upx](unpackme-upx/unpackme-upx.md)
+- [unpackme-upx](unpackme-upx/unpackme-upx.md)
+- [reverse](reverse/reverse.md)

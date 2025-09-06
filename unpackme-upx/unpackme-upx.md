@@ -1,18 +1,15 @@
 ## unpackme-upx (PicoCTF)
 
-### reversing a upx-packed ELF
-
 **Challenge**: 
 Can you get the flag?
 Reverse engineer this [binary](https://artifacts.picoctf.net/c/203/unpackme-upx).
-
 
 **Challenge Instruction**:
 Do the usual - download in your desired directory through `wget "https://artifacts.picoctf.net/c/203/unpackme-upx"`
 Make it an executable using `chmod +x <file-name>`
 
 **Solution**:
-After downloading the binary, I analysed what sort of file it was using the `file` command.
+After downloading the binary, I analysed what sort of file it was through the `file` command.
 
 ![file](images/file.png)
 
@@ -55,17 +52,17 @@ From here, I can `disassemble main`, and I prefer the Intel syntax, so I run `se
 
 I can see the usual pattern that is happening the initial lines of instructions:
 
-`main+4` - `main+8` is setting up the stack frame;
-`main+12` and `main+15` is taking the arguments that are provided; and
-`main+19` - `main+28` is setting up the stack canary.
+- `main+4` - `main+8` are setting up the stack frame;
+- `main+12` and `main+15` are taking the arguments that are provided at execution; and
+- `main+19` - `main+28` are setting up the stack canary.
 
-After the essential instructions have been run, it seems as though some values are being stored as local variables in `main+34` to `main+83`.
+After the essential instructions have been run, some values are being stored as local variables in `main+34` to `main+83`.
 
-I tried to look into these values that were being stored but, it was incomprehensible and didn't seem all that valuable (referenced below).
+I tried to look into these values that were being stored but, they were incomprehensible and didn't seem all that valuable (referenced below).
 
 ![strange values](images/print-decimal.png)
 
-`print /d <hex>` - print the provided number, as a decimal.
+(`print /d <hex>` - print the provided number, as a decimal)
 
 What I really wanted to focus on was the section where user input is stored, and then compared.
 
@@ -73,7 +70,7 @@ What I really wanted to focus on was the section where user input is stored, and
 
 In this section, the program calls `scanf` and the user input is stored in a local variable at `rbp-0x3c`.
 
-I break at `main+113` and then step one instruction in through `si` to examine the value that is stored in `rdi` as a string (`x/s $rdi`).
+I break at `main+113` and then step one instruction in through the `si` command to examine the value that is stored in `rdi` as a string (`x/s $rdi`).
 
 ![analyse](images/break.png)
 
@@ -87,4 +84,4 @@ I enter the value **754635** into the prompt and am rewarded with the flag:
 
 ![clear](images/clear.png)
 
-UPX me FTW
+`UPX me FTW`
