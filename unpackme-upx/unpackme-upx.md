@@ -1,31 +1,32 @@
-# unpackme-upx (PicoCTF)
+## unpackme-upx (PicoCTF)
 
-## reversing a upx-packed ELF
+### reversing a upx-packed ELF
 
-### Challenge: 
+**Challenge**: 
 Can you get the flag?
 Reverse engineer this [binary](https://artifacts.picoctf.net/c/203/unpackme-upx).
 
 
-### Challenge Instruction:
+**Challenge Instruction**:
 Do the usual - download in your desired directory through `wget "https://artifacts.picoctf.net/c/203/unpackme-upx"`
 Make it an executable using `chmod +x <file-name>`
 
-### Solution:
+**Solution**:
 After downloading the binary, I analysed what sort of file it was using the `file` command.
-*reference image*
+
+![file](images/file.png)
 
 As shown in the image above, it is a 64-bit ELF file, that is statically linked - not too much information.
 
 Next, I ran the file to see what sort of response/hint it would give:
 
-*reference image*
+![run](images/run.png)
 
 This tells me that, if I input the correct value, it should get me somewhere.
 
 So, I run `GDB` and see what values I can find. 
 
-*reference image*
+![initial](images/init-gdb.png)
 
 The functions and symbols seem to be hidden, and I need to find a way to reveal it.
 
@@ -33,7 +34,7 @@ I exit `GDB` and run `strings` on the executable to see if I can find some other
 
 `strings unpackme-upx`
 
-*reference image*
+![strings](images/strings.png)
 
 This line looks worth looking into. According to this, the executable has been packed using [UPX](https://github.com/upx/upx) (also hinted through the name of the executable).
 
@@ -42,15 +43,15 @@ According to the link, UPX is an open-source executable compressor, and it can a
 
 I download UPX, and run it through `upx -d unpackme-upx`. The option `-d` was provided to specify decompression.
 
-*reference image*
+![unpack](images/upx.png)
 
 Now if I go into `GDB` and get information of the functions, it's clear that all the functions have been unpacked and are visible.
 
-*reference image*
+![info functions](images/info-functions.png)
 
 From here, I can `disassemble main`, and I prefer the Intel syntax, so I run `set disassembly-flavor intel`.
 
-*reference image*
+![disassemble main](images/disas-main.png)
 
 I can see the usual pattern that is happening the initial lines of instructions:
 
@@ -60,21 +61,21 @@ I can see the usual pattern that is happening the initial lines of instructions:
 
 After the essential instructions have been run, it seems as though some values are being stored as local variables in `main+34` to `main+83`.
 
-I tried to look into these values that were being stored but, it was incomprehensible and didn't seem valuable as of yet (referenced below).
+I tried to look into these values that were being stored but, it was incomprehensible and didn't seem all that valuable (referenced below).
 
-*reference image*
+![strange values](images/print-decimal.png)
 
 `print /d <hex>` - print the provided number, as a decimal.
 
 What I really wanted to focus on was the section where user input is stored, and then compared.
 
-*reference image*
+![meat and veggies](images/core.png)
 
 In this section, the program calls `scanf` and the user input is stored in a local variable at `rbp-0x3c`.
 
 I break at `main+113` and then step one instruction in through `si` to examine the value that is stored in `rdi` as a string (`x/s $rdi`).
 
-*reference image*
+![analyse](images/break.png)
 
 As seen above, it is evident that the format that is specified in `scanf` is `%d`, which is a decimal (just something to note for when providing final solution).
 
@@ -84,6 +85,6 @@ After that, in `main+138`, the program jumps to `main+207` if the values are not
 
 I enter the value **754635** into the prompt and am rewarded with the flag:
 
-*reference image*
+![clear](images/clear.png)
 
 UPX me FTW
