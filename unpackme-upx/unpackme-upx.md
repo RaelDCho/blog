@@ -66,7 +66,7 @@ I tried to look into these values that were being stored but, they were incompre
 
 What I really wanted to focus on was the section where user input is stored, and then compared.
 
-![meat and veggies](images/core.png)
+![meat and potatoes](images/core.png)
 
 In this section, the program calls `scanf` and the user input is stored in a local variable at `rbp-0x3c`.
 
