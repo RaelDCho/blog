@@ -10,3 +10,5 @@ Some beginner-to-intermediate level challenges that focuses on mainly stack-rela
 [unpackme-upx](unpackme-upx/unpackme-upx.md)
 
 [reverse](reverse/reverse.md)
+
+[Bbbbloat](bbbbloat/bbbbloat.md)

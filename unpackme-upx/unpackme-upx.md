@@ -84,4 +84,4 @@ I enter the value **754635** into the prompt and am rewarded with the flag:
 
 ![clear](images/clear.png)
 
-`UPX me FTW`
+**`UPX me FTW`**
