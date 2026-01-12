@@ -1,4 +1,4 @@
-[Back](WriteUpFrontPage.md) | [Home](CTFFrontPage.md)
+[Back](index.md) | [Home](index.md)
 
 # PicoCTF 2019
 ---
