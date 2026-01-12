@@ -13,7 +13,7 @@ Key point
 ### Analysis
 
 <!-- insert picture of first block -->
-![0x68a](~/Images/HackadayTutorials/0x68a.JPG)
+![0x68a](~/binary/Images/HackadayTutorials/0x68a.JPG)
 
 The program begins with the stack being set up in:
 
@@ -73,7 +73,7 @@ program will spit out some string about two values being required and then will 
 Alternatively, if 3 arguments were provided it will move to location `0x6b5` -
 
 <!-- insert 0x6b5 image -->
-![0x6b5](~/Images/HackadayTutorials/0x6b5.JPG)
+![0x6b5](~/binary/Images/HackadayTutorials/0x6b5.JPG)
 
 This block beings with the instructions:
 
@@ -142,7 +142,7 @@ This will then decide whether it will jump to 0x707 if `eax` is greater than `va
 Simply put, the two values that are provided by the user will be added and stored in the variable `var_4h`. The same two values are then compared to see which is the larger value. If the value inside `var_8h` (the second argument provided) is larger, the executable will exit with return code `-1`. If `var_ch` is larger, the executable will continue onto the address `0x707`.
 
 <!-- 0x707 block picture -->
-![0x707](~/Images/HackadayTutorials/0x707.JPG)
+![0x707](~/binary/Images/HackadayTutorials/0x707.JPG)
 
 The next set of instructions shows an instruction that has not yet been seen before in `shl dword [var_8h], 1`.
 
@@ -154,7 +154,7 @@ This value is then moved into the `eax` register (lower 32-bits of `rax`) and th
 If `eax` is less than `var_ch` the executable will exit with return code `-1`, else, it will move to `0x725`.
 
 <!-- 0x725 block picture -->
-![0x725](~/Images/HackadayTutorials/0x725.JPG)
+![0x725](~/binary/Images/HackadayTutorials/0x725.JPG)
 
 
 The final set of instructions consists of the value that was calculated before in `0x6b5` being used to compare to the value `0x63` or 99 in hexadecimal.
