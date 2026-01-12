@@ -1,4 +1,4 @@
-[Back](index.md) | [Home](index.md)
+[Back](../index.md) | [Home](../index.md)
 
 # PicoCTF 2019
 ---
