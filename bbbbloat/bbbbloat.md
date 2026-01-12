@@ -17,6 +17,7 @@ It seems to be a 64-bit PIE ELF, that is dynamically linked, and stripped.
 Some things to note:
 - PIE: PIE stands for Position Independent Executable. This means that the executable can be loaded at any address.
 - ASLR: ASLR stands for Address Space Layout Randomisation. ASLR randomises memory addresses by an application.
+	- However, one thing to note is that GDB disables ASLR by default, but can be enabled through `set disable-randomization off`
 - Stripped: Stripped binaries are executable files that has had its symbols removed.
 
 These factors have all been implemented for the security of the binary, and will make it a touch harder to cracking it.
