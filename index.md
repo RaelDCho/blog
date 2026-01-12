@@ -1,5 +1,6 @@
 Hi, I'm Raphael, a current cyber security consultant that enjoys learning and earning.\
-Here is a list of all my current solutions.
+
+Resume: [Raphael D. Cho](Resume.pdf)
 
 ## Reverse Engineering Challenges
 ---
