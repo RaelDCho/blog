@@ -59,12 +59,12 @@ So, like overflow-1, the program calls `gets()` so we can overflow that and take
 If we `disassemble vuln`, we can see the stack build-up when the `vuln()` function is called.
 
 <!-- disasvulnoverflow2 -->
-![Image of GEF](../Images/PicoCTF2019/disasvulnoverflow2.jpg)
+![Image of GEF](Images/PicoCTF2019/disasvulnoverflow2.jpg)
 
 So, piecing all of it together, we can see the stack would probably look something like this:
 
 <!-- StackOverflow2 -->
-![Image of Stack](../Images/PicoCTF2019/StackOverflow2.jpg)
+![Image of Stack](Images/PicoCTF2019/StackOverflow2.jpg)
 
 Doing the calculation: `0xb4 + 0x4 + 0x4 = 0xbc`.
 Convert it to bytes through:
@@ -81,7 +81,7 @@ Run GDB for the program.
 Feed the string to the input and then analyze.
 
 <!-- OverflowedOverflow2 -->
-![Image of overflowed](../Images/PicoCTF2019/OverflowedOverflow2.jpg)
+![Image of overflowed](Images/PicoCTF2019/OverflowedOverflow2.jpg)
 
 We see that `waab` or `0x62616177` is what is stored as the return address.
 And so using `cyclic -l waab` it confirms that it is 188 bytes to reach `$eip`.
@@ -93,14 +93,14 @@ Arguments are actually thrown onto the stack before the instruction pointer and 
 We can `disassemble flag` to analyze the arguments for the `flag()` function.
 
 <!-- Overflow2args -->
-![Image of args](../Images/PicoCTF2019/Overflow2args.jpg)
+![Image of args](Images/PicoCTF2019/Overflow2args.jpg)
 
 This can also be seen through a disassembler.
 
 <!-- Overflow2argsdisassembler -->
-![Image of argsdisassembler](../Images/PicoCTF2019/Overflow2argsdisassembler.jpg)
+![Image of argsdisassembler](Images/PicoCTF2019/Overflow2argsdisassembler.jpg)
 <!-- Overflow2argsdisassembler2 -->
-![Image of argsdisassembler2](../Images/PicoCTF2019/Overflow2argsdisassembler2.jpg)
+![Image of argsdisassembler2](Images/PicoCTF2019/Overflow2argsdisassembler2.jpg)
 
 We can see that the arguments `0xdeadbeef` and `0xc0ded00d` are stored on the stack at `ebp + 0x8` and `ebp + 0xc`, respectively.
 

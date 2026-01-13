@@ -58,14 +58,14 @@ To search for specific ROP instructions:
 We don't need to store anything inside any instruction so just a normal `ret` instruction will do.
 
 <!-- NewOverflow1Ropper -->
-![Image of ropper](../Images/PicoCTF2019/NewOverflow1ropper.JPG)
+![Image of ropper](Images/PicoCTF2019/NewOverflow1ropper.JPG)
 
 Find out the address of the `flag()` function however you want (e.g., `x flag`, `disas flag`, `info functions`, etc.) and then construct your script as below.
 
 Note: if you try to run it without the gadget, the program will get stuck at the instruction below:
 
 <!-- NewOverflow1movaps -->
-![Image of movaps](../Images/PicoCTF2019/NewOverflow1movaps.JPG)
+![Image of movaps](Images/PicoCTF2019/NewOverflow1movaps.JPG)
 
 If you search the instruction up, it'll basically say that it's getting stuck because it's not aligned on a 16-byte boundary (not divisible by 16).
 Since we're working with hexadecimal addresses, this means that the address has to end in a 0.
