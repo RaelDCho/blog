@@ -1,4 +1,4 @@
-[Back](PicoFrontPage.md)
+[Back](../index.md)
 
 # Overflow 1
 ---
@@ -56,7 +56,7 @@ Some important point(s):
 When a function is called, first its parameters are thrown on the stack, then the instruction pointer (the return address), then the old base pointer, during all of this the stack pointer is constantly moving up to point to the top of the stack. Finally, the base pointer is moved up to match the stack pointer. Let's draw that out.
 
 <!-- Insert BasicCall -->
-![BasicCall](../Images/PicoCTF2019/BasicCall.jpg)
+![BasicCall](Images/PicoCTF2019/BasicCall.jpg)
 
 ### Analysis
 
@@ -68,17 +68,17 @@ You can find GDB cheat sheets online for more commands, those would be helpful.
 Scrolling down, we can see some functions that are labelled `vuln` and `flag`.
 
 <!-- Insert screenshot -->
-![infofunctions](../Images/PicoCTF2019/infofunctions.jpg)
+![infofunctions](Images/PicoCTF2019/infofunctions.jpg)
 
 If we `disassemble main` we can also see that it calls the `vuln()` function.
 
 <!-- Insert screenshot -->
-![disasmain](../Images/PicoCTF2019/disasmain.jpg)
+![disasmain](Images/PicoCTF2019/disasmain.jpg)
 
 We can `disassemble vuln` to get a more in-depth view of what happens when `vuln` function is called.
 
 <!-- Insert Screenshot -->
-![disasvuln](../Images/PicoCTF2019/disasvuln.jpg)
+![disasvuln](Images/PicoCTF2019/disasvuln.jpg)
 
 If we draw this out, we can get a better understanding of what is happening.
 
@@ -86,14 +86,14 @@ Another important note is that, the vuln calls the `gets()` function and if we c
 `NEVER USE THIS FUNCTION`
 
 <!-- Screenshot of man page -->
-![NOGETS](../Images/PicoCTF2019/NEVERUSETHISFUNCTION.jpg)
+![NOGETS](Images/PicoCTF2019/NEVERUSETHISFUNCTION.jpg)
 
 The reason why `gets()` is extremely dangerous to use is because it will keep taking input until an EOF or newline is fed through. This allows us to overflow the buffer and leak into other important components of the stack. So in this case, we can overwrite the return address in `$eip`.
 
 So drawing everything that was noticed before.
 
 <!-- Insert stack image with measurements -->
-![StackOverflow1](../Images/PicoCTF2019/StackOverflow1.jpg)
+![StackOverflow1](Images/PicoCTF2019/StackOverflow1.jpg)
 
 And thus, we can see that the buffer is `0x44`, `$ebx` is `0x4`, `$ebp` is `0x4` and `$eip` is `0x4`. (x86 32-bit has 32-bit registers = 4 bytes).
 So adding them (except `$eip`), we can see that, to reach `$eip`, it is `0x4c` in hex.
@@ -120,7 +120,7 @@ So, let the program run through `r` or `run`, and we get met by a string output 
 Feed it the copied string generated from the `cyclic` command.
 
 <!-- Insert the output screencap -->
-![OverflowedOverflow1](../Images/PicoCTF2019/OverflowedOverflow1.jpg)
+![OverflowedOverflow1](Images/PicoCTF2019/OverflowedOverflow1.jpg)
 
 We can now see that the return address is different and we are met with a segmentation fault. This is because `0x61616174` (hex for taaa, little endian) does not actually exist, but what if we were to replace it with an address that DID exist and is in the form of a flag?
 Back to the terminal with the `cyclic` command, or a new one if you closed it.
@@ -163,5 +163,3 @@ p = s.process('AbsolutePathToProgram', cwd='TheWorkingDirectoryOfProgram')
 ```
 
 Run the script and you should win.
-
-[Back](PicoFrontPage.md)  [Overflow 2](overflow2writeup.md)

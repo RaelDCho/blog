@@ -106,4 +106,3 @@ p = s.process('AbsolutePathToProgram', cwd='TheWorkingDirectoryOfProgram')
 
 Run the script and you should win.
 
-[Overflow 2](overflow2writeup.md) | [New Overflow 2](newoverflow2writeup.md)
